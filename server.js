@@ -29,6 +29,10 @@ app.get('/api/notes/', (req, res) => {
         res.send(404);
       }
 });
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
 /////end of get section
 
 /////post section
@@ -37,31 +41,7 @@ app.post('/api/notes', (req, res) => {
     const notes = createNewNote(req.body, words);
       res.json(notes);
 });
-
-//api post route for notes endpoint
-// app.post('/api/notes', (req, res) => {
-//     // console.log(dbnotes)
-//     //req.body is where out incoming content will be. get unique id
-//     req.body.id = dbnotes.length.toString();
-//     const note = req.body;
-//     dbnotes.push(note);
-//     //write note json - stringify converts json and keeps data formatted
-//     fs.writeFileSync(
-//         path.join(__dirname, './db/db.json'),
-//         JSON.stringify(dbnotes, null, 2)
-//     );
-//     res.json(note);//or res.json(req.body)
-// });
-
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
-});
-
-app.post('/api/notes', (req, res) => {
-    req.body.id = uniqid();
-    const notes = createNewNote(req.body, words);
-      res.json(notes);
-});
+//////
 
 function createNewNote(body, dbNotes) {
     const note = body;
